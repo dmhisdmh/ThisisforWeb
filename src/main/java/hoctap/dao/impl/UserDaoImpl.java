@@ -29,16 +29,9 @@ public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				list.add(new UserModel(rs.getInt("id"), 
-						rs.getString("username"), 
-						rs.getString("password"),
-						rs.getString("email"), 
-						rs.getString("fullname"), 
-						rs.getString("images"),
-						rs.getString("phone"),
-						rs.getInt("roleid"),
-						rs.getDate("createDate")
-						));
+				list.add(new UserModel(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
+						rs.getString("email"), rs.getString("fullname"), rs.getString("images"), rs.getString("phone"),
+						rs.getInt("roleid"), rs.getDate("createDate")));
 			}
 			return list;
 		} catch (Exception e) {
@@ -71,19 +64,19 @@ public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
 	@Override
 	public void insert(UserModel user) {
 		String sql = "INSERT INTO users(id, username, email, password, images, fullname, phone, roleid, createDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		
+
 		try {
 			conn = super.getDatabaseConnection();
-			
+
 			ps = conn.prepareStatement(sql);
-			
+
 			ps.setInt(1, user.getId());
 			ps.setString(2, user.getUsername());
 			ps.setString(3, user.getEmail());
@@ -93,14 +86,13 @@ public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
 			ps.setInt(7, user.getRoleid());
 			ps.setString(8, user.getPhone());
 			ps.setDate(9, user.getCreateDate());
-			
+
 			ps.executeUpdate();
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 	@Override
 	public UserModel findByName(String username) {
@@ -128,8 +120,51 @@ public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
 		}
 		return null;
 	}
-	
-	
+
+	@Override
+	public UserModel findByEmail(String email) {
+		String sql = "SELECT * FROM users WHERE email = ?";
+		try {
+			conn = super.getDatabaseConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				UserModel user = new UserModel();
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("email"));
+				user.setUsername(rs.getString("username"));
+				user.setFullname(rs.getString("fullname"));
+				user.setPassword(rs.getString("password"));
+				user.setImages(rs.getString("images"));
+				user.setRoleid(rs.getInt("roleid"));
+				user.setPhone(rs.getString("phone"));
+				user.setCreateDate(rs.getDate("createdate"));
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public boolean checkExistUsername(String username) {
+		String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+		try {
+			conn = super.getDatabaseConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1) > 0; // Trả về true nếu tồn tại, false nếu không
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public static void main(String[] args) {
 		UserDaoImpl userDao = new UserDaoImpl();
 //		
@@ -140,7 +175,7 @@ public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
 //		
 		UserModel user = userDao.findByName("dmh");
 		System.out.println(user);
-		
+
 	}
 
 }

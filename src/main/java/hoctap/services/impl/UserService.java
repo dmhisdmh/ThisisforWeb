@@ -25,4 +25,28 @@ public class UserService implements IUserService {
 		return userDao.findByName(username);
 	}
 
+	@Override
+	public boolean register(String email, String password, String username, String fullname, String phone) {
+		if (checkExistEmail(email) || checkExistUsername(username)) {
+	        return true;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean checkExistEmail(String email) {
+		 UserModel user = userDao.findByEmail(email); 
+		    return user != null;
+	}
+
+	
+	public boolean checkExistUsername(String username) {
+		UserModel user = userDao.findByName(username);
+		return user != null;
+	}
+
+	
+
+	
+
 }

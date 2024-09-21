@@ -21,6 +21,7 @@ public class DBConnectMySQL {
 		return null;
 	}
 	
+	//Test ket noi voi MySQL
 	public static void main(String[] args) {
 		try {
 			new DBConnectMySQL();
