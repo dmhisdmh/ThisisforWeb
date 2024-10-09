@@ -5,32 +5,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Login Page</title>
 </head>
 <body>
-	<form action="/LTweb/login" method="post">
+	<div class="container">
+		<form action="/LTweb/login" method="post">
 
-		<c:if test="${alert !=null}">
-			<h3 class="alert alert danger">${alert}</h3>
-		</c:if>
-		<div class="container">
-			<label for="uname"><b>Username</b></label> <input type="text"
-				placeholder="Enter Username" name="uname" required> <label
-				for="psw"><b>Password</b></label> <input type="password"
-				placeholder="Enter Password" name="psw" required>
+			<!-- Hiển thị thông báo lỗi nếu có -->
+			<c:if test="${alert != null}">
+				<div class="alert">${alert}</div>
+			</c:if>
+
+			<label for="uname">Username</label> <input type="text" id="uname"
+				name="uname" placeholder="Username" required> <label
+				for="psw">Password</label> <input type="password" id="psw"
+				name="psw" placeholder="Password" required> <label>
+				<input type="checkbox" checked="checked" name="remember">
+				Remember me
+			</label>
 
 			<button type="submit">Login</button>
-			<label> <input type="checkbox" checked="checked"
-				name="remember"> Remember me
-			</label>
-		</div>
 
-		<div class="container" style="background-color: #f1f1f1">
 			<span class="psw">Forgot <a href="#">password?</a></span>
-		</div>
-	</form>
+		</form>
+	</div>
 </body>
 </html>
-
-
-<%@ include file="/views/topbar.jsp"%>

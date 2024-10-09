@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Admin home page</title>
 </head>
 <body>
-	trang chu admin
+	 <h1>Welcome, ${fullname}!</h1>
+	 <a href="${pageContext.request.contextPath}/logout">Logout</a>
 </body>
 </html>

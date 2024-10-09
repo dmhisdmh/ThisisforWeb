@@ -15,12 +15,11 @@ public class DBConnectMySQL {
 			Class.forName(DRIVER);
 			return DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	//Test ket noi voi MySQL
 	public static void main(String[] args) {
 		try {
