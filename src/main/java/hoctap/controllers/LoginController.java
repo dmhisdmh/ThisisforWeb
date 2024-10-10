@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import hoctap.models.UserModel;
 import hoctap.services.IUserService;
-import hoctap.services.impl.UserService;
+import hoctap.services.impl.UserServiceImpl;
 import hoctap.utils.Constant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	IUserService service = new UserService();
+	IUserService service = new UserServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
