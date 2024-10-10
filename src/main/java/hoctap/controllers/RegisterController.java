@@ -1,57 +1,33 @@
 package hoctap.controllers;
 
+import java.io.IOException;
+import hoctap.services.impl.UserServiceImpl;
+import hoctap.utils.Constant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
-
-import hoctap.services.impl.UserService;
-import hoctap.utils.Constant;
 
 @WebServlet(urlPatterns = "/register")
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession(false);
-		if (session != null && session.getAttribute("username") != null) {
-			resp.sendRedirect(req.getContextPath() + "/views/admin/home.jsp");
-			return;
-		}
-
-		Cookie[] cookies = req.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("username")) {
-					session = req.getSession(true);
-					session.setAttribute("username", cookie.getValue());
-					resp.sendRedirect(req.getContextPath() + "/views/admin/home.jsp");
-					return;
-				}
-			}
-		}
 		req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
-
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		
+		String username = req.getParameter("uname");
+		String password = req.getParameter("psw");
 		String email = req.getParameter("email");
-		String fullname = null;
-		String phone = null;
-		UserService service = new UserService();
+		UserServiceImpl service = new UserServiceImpl();
 		String alertMsg = "";
 		if (service.checkExistEmail(email)) {
 			alertMsg = "Email đã tồn tại!";
@@ -65,8 +41,8 @@ public class RegisterController extends HttpServlet {
 			req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
 			return;
 		}
-		
-		boolean isSuccess = service.register(username, password, email, fullname, phone);
+
+		boolean isSuccess = service.register(email, username, password);
 				if (isSuccess) {
 				//SendMail sm = new SendMail();
 				//sm.sendMail(email, "Shopping.iotstar.vn", "Welcome to Shopping. Please Login to use service. Thanks !");
