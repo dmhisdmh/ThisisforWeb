@@ -21,12 +21,10 @@ public class UserModel implements Serializable{
 	public UserModel() {
 		super();
 	}
-	
-	
 
 	public UserModel(int id, String username, String password, String email, String fullname, String images,
 			String phone, int roleid, Date createDate) {
-		super();
+		
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -35,6 +33,15 @@ public class UserModel implements Serializable{
 		this.images = images;
 		this.phone = phone;
 		this.roleid = roleid;
+		this.createDate = createDate;
+	}
+
+
+
+	public UserModel(String username, String password, String email, Date createDate) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
 		this.createDate = createDate;
 	}
 
@@ -87,8 +94,8 @@ public class UserModel implements Serializable{
 	public void setImages(String images) {
 		this.images = images;
 	}
-	
-	
+
+
 
 	public String getPhone() {
 		return phone;
@@ -132,15 +139,15 @@ public class UserModel implements Serializable{
 				+ ", fullname=" + fullname + ", images=" + images + ", phone=" + phone + ", roleid=" + roleid
 				+ ", createDate=" + createDate + "]";
 	}
-	
-	
 
 
 
-	
 
-	
-	
-	
-	
+
+
+
+
+
+
+
 }

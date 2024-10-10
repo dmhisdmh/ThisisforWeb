@@ -26,7 +26,11 @@
 
 			<button type="submit">Login</button>
 
-			<span class="psw">Forgot <a href="#">password?</a></span>
+			<span class="psw"> <a href="/LTweb/forgot"> Forgot password?</a></span>
+			
+			<div class="register">
+                Don't have an account? <a href="/LTweb/register">Register here</a>
+            </div>
 		</form>
 	</div>
 </body>
