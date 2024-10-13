@@ -18,39 +18,89 @@ public class CategoryDaoImpl extends DBConnectMySQL implements ICategoryDao {
 
 	@Override
 	public List<CategoryModel> findAll() {
-		
+
 		List<CategoryModel> categories = new ArrayList<CategoryModel>();
 		String sql = "SELECT * FROM categories";
 		try {
-			
+
 			conn = super.getDatabaseConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			
-		while (rs.next()) {
+
+			while (rs.next()) {
 //			list.add(new CategoryModel(rs.getInt("categoryid"), rs.getString("categoryname"), rs.getString("images"), rs.getInt("status")));
-			CategoryModel category = new CategoryModel();
-			category.setCategoryid(rs.getInt("categoryid"));
-			category.setCategoryname(rs.getString("categoryname"));
-			category.setImages(rs.getString("images"));
-			category.setStatus(rs.getInt("status"));
-			categories.add(category);
-		}} catch (Exception e) {
-		e.printStackTrace();}
-		return categories;
+				CategoryModel category = new CategoryModel();
+				category.setCategoryid(rs.getInt("categoryid"));
+				category.setCategoryname(rs.getString("categoryname"));
+				category.setImages(rs.getString("images"));
+				category.setStatus(rs.getInt("status"));
+				categories.add(category);
+			}
+			conn.close();
+			ps.close();
+			rs.close();
+			return categories;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public CategoryModel findByID(int id) {
-		// TODO Auto-generated method stub
+		String sql = "SELECT * from categories WHERE categoryid =  ?";
+		try {
+
+			conn = super.getDatabaseConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				CategoryModel category = new CategoryModel();
+				category.setCategoryid(rs.getInt("categoryid"));
+				category.setCategoryname(rs.getString("categoryname"));
+				category.setImages(rs.getString("images"));
+				category.setStatus(rs.getInt("status"));
+				return category;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
-	public CategoryModel findByName(String name) {
-		// TODO Auto-generated method stub
+	public List<CategoryModel> findByName(String name) {
+		List<CategoryModel> categories = new ArrayList<CategoryModel>();
+		String sql = "SELECT * FROM categories WHERE categoryname like ?";
+		try {
+
+			conn = super.getDatabaseConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,"%" + name + "%");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				CategoryModel category = new CategoryModel();
+				category.setCategoryid(rs.getInt("categoryid"));
+				category.setCategoryname(rs.getString("categoryname"));
+				category.setImages(rs.getString("images"));
+				category.setStatus(rs.getInt("status"));
+				categories.add(category);
+			}
+			conn.close();
+			ps.close();
+			rs.close();
+			return categories;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
+
 
 	@Override
 	public void insert(CategoryModel category) {
@@ -129,5 +179,15 @@ public class CategoryDaoImpl extends DBConnectMySQL implements ICategoryDao {
 		}
 
 	}
+	
+	public static void main(String[] args) {
+		CategoryDaoImpl cateDao = new CategoryDaoImpl();
+		CategoryModel cate = cateDao.findByID(1);
+		if (cate ==null) 
+			System.out.println(1);
+		else 
+			System.out.println(0);
+	}
+
 
 }

@@ -9,6 +9,10 @@ public class CategoryModel implements Serializable{
 	private String images;
 	private int status;
 	
+	public CategoryModel() {
+		super();
+	}
+	
 	public int getCategoryid() {
 		return categoryid;
 	}
@@ -33,9 +37,7 @@ public class CategoryModel implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public CategoryModel() {
-		super();
-	}
+	
 	@Override
 	public String toString() {
 		return "CategoryModel [categoryid=" + categoryid + ", categoryname=" + categoryname + ", images=" + images

@@ -9,7 +9,7 @@ public interface ICategoryDao {
 	List<CategoryModel> findAll();
 	
 	CategoryModel findByID(int id);
-	CategoryModel findByName(String name);
+	List<CategoryModel> findByName(String name);
 	
 	void insert(CategoryModel category);
 	void update(CategoryModel category);

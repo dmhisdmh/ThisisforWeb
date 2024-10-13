@@ -5,10 +5,18 @@ import java.util.List;
 import hoctap.models.CategoryModel;
 
 public interface ICategoryService {
-	void insert(CategoryModel category);
-	void delete(int id);
-	void edit(CategoryModel category);
-	
 	List<CategoryModel> findAll();
-	
+
+	CategoryModel findByID(int id);
+
+	List<CategoryModel> findByName(String name);
+
+	void insert(CategoryModel category);
+
+	void update(CategoryModel category);
+
+	void delete(int id);
+
+	void updateStatus(int id, int status);
+
 }
